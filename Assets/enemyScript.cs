@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,6 +14,8 @@ public class enemyScript : MonoBehaviour
     GameObject knife;
     [SerializeField]
     private List<Transform> enemyPatrol = new List<Transform>();
+
+    int currentPoint = 0;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -33,7 +36,21 @@ public class enemyScript : MonoBehaviour
         }
         else
         {
-            agent.destination = enemyPatrol[0].position;
+            if (Vector3.Distance(transform.position, enemyPatrol[currentPoint].position) >= 3)
+            {
+                agent.destination = enemyPatrol[currentPoint].position;
+            }
+            else
+            {
+                if (currentPoint < enemyPatrol.Count-1)
+                {
+                    currentPoint++;
+                }
+                else
+                {
+                    currentPoint = 0;
+                }
+            }
         }
         
         if (Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
@@ -49,6 +66,8 @@ public class enemyScript : MonoBehaviour
     public void TakeDamage(float value)
     {
         health -= value;
+        GetComponent<MeshRenderer>().material.DOColor(Color.red, 1).From();
+        GetComponent<MeshRenderer>().material.DOColor(Color.yellow, 1);
         if (health <= 0)
             Destroy(this.gameObject);
     }

@@ -15,6 +15,8 @@ public class playerShoot : MonoBehaviour
     private TMP_Text bulletText;
     [SerializeField]
     private ParticleSystem shootParticles;
+    [SerializeField]
+    private AudioSource ShootAudio;
     private void OnEnable()
     {
         reloadKey.Enable();
@@ -54,6 +56,7 @@ public class playerShoot : MonoBehaviour
         {
             RaycastHit hit;
             bullets--;
+            ShootAudio.Play();
             UpdateBulletText();
 
             shootParticles.Play();
