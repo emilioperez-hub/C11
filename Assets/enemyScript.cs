@@ -13,6 +13,8 @@ public class enemyScript : MonoBehaviour
     [SerializeField]
     GameObject knife;
     [SerializeField]
+    private GameObject AmmoBox;
+    [SerializeField]
     private List<Transform> enemyPatrol = new List<Transform>();
 
     int currentPoint = 0;
@@ -30,7 +32,7 @@ public class enemyScript : MonoBehaviour
     {
         agent.destination = player.position;
 
-        if (Vector3.Distance(transform.position, player.position) <= 10)
+        if (Vector3.Distance(transform.position, player.position) <= 2)
         {
             agent.destination = player.position;
         }
@@ -69,6 +71,15 @@ public class enemyScript : MonoBehaviour
         GetComponent<MeshRenderer>().material.DOColor(Color.red, 1).From();
         GetComponent<MeshRenderer>().material.DOColor(Color.yellow, 1);
         if (health <= 0)
+        {
+            float drop = Random.Range(0, 10);
+            {
+            if(drop > 2)
+            Instantiate(AmmoBox, transform.position, Quaternion.identity) ;
+            }
+            
             Destroy(this.gameObject);
+
+        }
     }
 }

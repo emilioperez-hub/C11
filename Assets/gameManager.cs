@@ -10,7 +10,10 @@ public class gameManager : MonoBehaviour
     public float gameTime;
     public float currentTime;
     public bool isPlaying;
-    public TMP_Text TimerText; 
+    public TMP_Text TimerText;
+    public TMP_Text scoreText;
+    public GameObject gameOverPanel;
+    public int score;
 
 
     public float maxTime;
@@ -43,12 +46,25 @@ public class gameManager : MonoBehaviour
         {
             gameTime -= Time.deltaTime;
             int min = (int)gameTime / 60;
-            int seg = (int)gameTime & 60;
+            int seg = (int)gameTime % 60;
             TimerText.text = min.ToString("00") + ":" + seg.ToString();
         }
     }
     public void ReloadLevel()
     {
         SceneManager.LoadScene(0);
+    }
+    public void AddTime(float time)
+    {
+        gameTime += time;
+    }
+    public void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+    }
+    public void AddScore(int value)
+    {
+        score += value;
+        scoreText.text = "Score: "+ score.ToString();
     }
 }

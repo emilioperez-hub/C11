@@ -5,29 +5,29 @@ public class gameEvents : MonoBehaviour
 {
     public static gameEvents instance;
 
-    public event Action onDoorTriggerEnter;
+    public event Action<DoorController> onDoorTriggerEnter;
 
-    public event Action onDoorTriggerExit;
+   
+    public event Action<DoorController> onDoorTriggerExit;
     private void Awake()
     {
         if (instance == null)
             instance = this;
     }
-    public void OpenTriggerDoor()
+    public void OpenTriggerDoor(DoorController door)
     {
-        onDoorTriggerEnter();
+        if (onDoorTriggerExit != null)
+            onDoorTriggerEnter(door);
     }
-    public void CloseTriggerDoor()
+    public void CloseTriggerDoor(DoorController door)
     {
-        onDoorTriggerExit();
+        if(onDoorTriggerExit != null)
+           onDoorTriggerExit(door);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         

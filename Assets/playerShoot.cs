@@ -10,13 +10,14 @@ public class playerShoot : MonoBehaviour
     private InputAction reloadKey;
 
     private int maxBullets;
-    //Publico para unity
+    //Publico unicamente para unity
     [SerializeField]
     private TMP_Text bulletText;
     [SerializeField]
     private ParticleSystem shootParticles;
     [SerializeField]
     private AudioSource ShootAudio;
+    gameManager gameManager;
     private void OnEnable()
     {
         reloadKey.Enable();
@@ -65,6 +66,7 @@ public class playerShoot : MonoBehaviour
                 if(hit.transform.CompareTag("Enemy"))
                 {
                     hit.transform.GetComponent<enemyScript>().TakeDamage(5);
+                    gameManager.AddScore(1);
                 }
                 Debug.DrawRay(transform.position, transform.forward * hit.distance, hitColor);
                 //Debug.Break();

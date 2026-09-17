@@ -7,6 +7,8 @@ public class playerScript : MonoBehaviour
     private InputAction movementinput;
     [SerializeField]
     private InputAction jumpInput;
+    [SerializeField]
+    private InputAction run;
     CharacterController controller;
     private float playerSpeed = 2f;
 
@@ -22,11 +24,13 @@ public class playerScript : MonoBehaviour
     {
         movementinput.Enable();
         jumpInput.Enable();
+        run.Enable();
     }
     private void OnDisable()
     {
         movementinput.Disable();
         jumpInput.Disable();
+        run.Disable();
     }
     void Start()
     {
@@ -55,6 +59,10 @@ public class playerScript : MonoBehaviour
             Vector3 finalMove = direction * playerSpeed + Vector3.up * playerVelocity.y;
 
             controller.Move(finalMove * Time.deltaTime);
+            if(run.triggered)
+            {
+                playerSpeed = 4f;
+            }
         }
     }
 }
